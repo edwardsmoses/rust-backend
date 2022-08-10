@@ -3,6 +3,7 @@
 #[macro_use] extern crate rocket;
 #[macro_use] use rocket::*;
 use rocket_contrib::serve::StaticFiles;
+use rocket_contrib::helmet::SpaceHelmet;
 
 #[get("/")]
 fn index() -> String {
@@ -15,5 +16,9 @@ fn hello(name: String, age: u8) -> String {
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![hello, index]).mount("/files", StaticFiles::from("static/")).launch();
+    rocket::ignite()
+    .attach(SpaceHelmet::default())
+    .mount("/", routes![hello, index])
+    .mount("/files", StaticFiles::from("static/"))
+    .launch();
 }
