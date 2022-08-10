@@ -1297,6 +1297,7 @@ dependencies = [
  "env_logger",
  "futures",
  "juniper",
+ "lazy_static",
  "rocket",
  "rocket_contrib",
  "serde",
