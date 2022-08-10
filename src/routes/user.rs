@@ -116,3 +116,29 @@ pub fn delete_user_rt(userdb: State<Users>, user: Json<UserPassword>, id: Uuid) 
         None => ApiResponse::err(json!(format!("id {} not found", id))),
     }
 }
+
+#[patch("/users/<id>", format = "json", data = "<user>")]
+pub fn patch_user_rt(userdb: State<Users>, user: Json<UserPassword>, id: Uuid) -> ApiResponse {
+    let mut v = userdb.db.lock().unwrap();
+    let users = &mut *v;
+
+    let pos = users
+        .iter()
+        .position(|x| x.id.to_string() == id.to_string());
+    match pos {
+        Some(p) => {
+            if v[p].match_password(&user.password) {
+                match &user.new_password {
+                    Some(pwd) => {
+                        v[p].update_password(&pwd);
+                        ApiResponse::ok(json!("Password updated"))
+                    }
+                    None => ApiResponse::err(json!("Password not provided")),
+                }
+            } else {
+                ApiResponse::err(json!("user not authenticated"))
+            }
+        }
+        None => ApiResponse::err(json!(format!("id {} not found", id))),
+    }
+}
