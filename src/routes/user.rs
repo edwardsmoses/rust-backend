@@ -37,12 +37,12 @@ pub fn new_user_rt() -> Json<Response> {
 
 #[get("/users/<id>")]
 pub fn info_user_rt(id: String) -> Json<Response> {
-    Json(Response::ok(&* format!("Info for new user {}", id)))
+    Json(Response::ok(&* format!("Info for user {}", id)))
 }
 
 #[put("/users/<id>")]
 pub fn update_user_rt(id: String) -> Json<Response> {
-    Json(Response::ok(&* format!("Update info for new user {}", id)))
+    Json(Response::ok(&* format!("Update info for user {}", id)))
 }
 
 #[delete("/users/<id>")]
