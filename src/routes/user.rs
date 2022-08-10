@@ -1,3 +1,5 @@
+use std::fmt::format;
+
 use rocket::*;
 use serde::{Deserialize, Serialize};
 use rocket_contrib::json::{Json};
@@ -29,21 +31,21 @@ pub fn user_list_rt() -> Json<Response> {
 }
 
 #[post("/users")]
-pub fn new_user_rt() -> String {
-    "Creation of new user".to_string()
+pub fn new_user_rt() -> Json<Response> {
+    Json(Response::ok("Creation of new user"))
 }
 
 #[get("/users/<id>")]
-pub fn info_user_rt(id: String) -> String {
-    format!("Info for user {}", id)
+pub fn info_user_rt(id: String) -> Json<Response> {
+    Json(Response::ok(&* format!("Info for new user {}", id)))
 }
 
 #[put("/users/<id>")]
-pub fn update_user_rt(id: String) -> String {
-    format!("Update info for user {}", id)
+pub fn update_user_rt(id: String) -> Json<Response> {
+    Json(Response::ok(&* format!("Update info for new user {}", id)))
 }
 
 #[delete("/users/<id>")]
-pub fn delete_user_rt(id: String) -> String {
-    format!("Delete user {}", id)
+pub fn delete_user_rt(id: String) -> Json<Response> {
+    Json(Response::ok(&* format!("Delete user {}", id)))
 }
