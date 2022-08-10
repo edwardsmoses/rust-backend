@@ -3,6 +3,7 @@ use std::fmt::format;
 use rocket::*;
 use serde::{Deserialize, Serialize};
 use rocket_contrib::json::{Json};
+use rocket_contrib::uuid::Uuid;
 
 #[derive(Serialize, Deserialize)]
 pub struct Response {
@@ -36,16 +37,16 @@ pub fn new_user_rt() -> Json<Response> {
 }
 
 #[get("/users/<id>")]
-pub fn info_user_rt(id: String) -> Json<Response> {
+pub fn info_user_rt(id: Uuid) -> Json<Response> {
     Json(Response::ok(&* format!("Info for user {}", id)))
 }
 
 #[put("/users/<id>")]
-pub fn update_user_rt(id: String) -> Json<Response> {
+pub fn update_user_rt(id: Uuid) -> Json<Response> {
     Json(Response::ok(&* format!("Update info for user {}", id)))
 }
 
 #[delete("/users/<id>")]
-pub fn delete_user_rt(id: String) -> Json<Response> {
+pub fn delete_user_rt(id: Uuid) -> Json<Response> {
     Json(Response::ok(&* format!("Delete user {}", id)))
 }
