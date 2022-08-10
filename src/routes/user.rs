@@ -47,7 +47,7 @@ pub fn user_list_rt(userdb: State<Users>) -> ApiResponse {
     let v = userdb.db.lock().unwrap();
     let users = &*v;
 
-    ApiResponse::ok(json!([users.len()]))
+    ApiResponse::ok(json!([users]))
 }
 
 #[post("/users", format = "json", data = "<user>")]
