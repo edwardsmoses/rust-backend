@@ -21,6 +21,7 @@ pub fn rocket_builder() -> rocket::Rocket {
                 routes::user::user_list_rt,
                 routes::user::new_user_rt,
                 routes::user::info_user_rt,
+                routes::user::id_user_rt,
                 routes::user::update_user_rt,
                 routes::user::delete_user_rt,
                 routes::user::patch_user_rt

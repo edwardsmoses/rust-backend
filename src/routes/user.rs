@@ -74,6 +74,18 @@ pub fn info_user_rt(userdb: State<Users>, id: Uuid) -> ApiResponse {
     }
 }
 
+#[get("/users/<email>", rank = 2)]
+pub fn id_user_rt(userdb: State<Users>, email: String) -> ApiResponse {
+    let mut v = userdb.db.lock().unwrap();
+    let users = &mut *v;
+
+    let pos = users.iter().position(|x| x.email == email);
+    match pos {
+        Some(p) => ApiResponse::ok(json!(ResponseUser::from_user(&v[p]))),
+        None => ApiResponse::err(json!(format!("user {} not found", email))),
+    }
+}
+
 #[put("/users/<id>", format = "json", data = "<user>")]
 pub fn update_user_rt(userdb: State<Users>, user: Json<InsertableUser>, id: Uuid) -> ApiResponse {
     let mut v = userdb.db.lock().unwrap();
