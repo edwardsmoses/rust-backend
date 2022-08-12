@@ -1,5 +1,3 @@
-use std::fmt::format;
-
 use crate::data::db::{InsertableUser, ResponseUser, User, UserPassword};
 use crate::Users;
 use rocket::http::{ContentType, Status};
@@ -10,7 +8,6 @@ use rocket::*;
 use rocket_contrib::json;
 use rocket_contrib::json::{Json, JsonValue};
 use rocket_contrib::uuid::Uuid;
-use serde::{Deserialize, Serialize};
 
 #[derive(Debug)]
 pub struct ApiResponse {
