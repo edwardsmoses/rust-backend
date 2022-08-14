@@ -55,6 +55,23 @@ fn new_user_rt_test() {
 }
 
 #[test]
+fn failed_new_user_rt_test_with_no_email() {
+    let client = common::setup();
+    let response = client
+        .post("/api/users")
+        .header(ContentType::JSON)
+        .body(
+            r##"{
+        "name": "John Doe",
+        "password": "tester"
+        }"##,
+        )
+        .dispatch();
+
+    assert_ne!(response.status(), Status::Ok);
+}
+
+#[test]
 fn info_user_rt_test() {
     let client = common::setup();
 
