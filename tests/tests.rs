@@ -184,9 +184,5 @@ fn delete_user_rt_test() {
         serde_json::from_str(&response_body.as_str()).expect("Valid User Response");
 
     assert_eq!(response_update_user.status(), Status::Ok);
-    assert_eq!(response_update_user.content_type(), Some(ContentType::JSON));
-
-    //assert that the user was deleted, and returns the user with the updated info
-    assert_eq!(user.name, "Jane Doe JD.");
-    assert_eq!(user.email, "jane.doe+new@gmail.com");
+    assert_eq!(response_update_user.content_type(), Some(ContentType::JSON));    
 }
