@@ -46,7 +46,7 @@ impl User {
             .map(char::from)
             .collect();
 
-        let mut config = Config::default();
+        let config = Config::default();
         let hashed_password =
             hash_encoded(&password.as_bytes(), &salt.as_bytes(), &config).unwrap();
 
@@ -70,7 +70,7 @@ impl User {
     }
 
     pub fn update_password(&mut self, password: &String) {
-        let mut config = Config::default();
+        let config = Config::default();
 
         self.hashed_password =
             hash_encoded(password.as_bytes(), self.salt.as_bytes(), &config).unwrap();

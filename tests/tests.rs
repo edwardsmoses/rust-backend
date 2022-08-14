@@ -1,11 +1,9 @@
 use lazy_static::lazy_static;
 use rocket::http::{ContentType, Status};
-use serde_json;
 use rust_graphql_backend::data::db::ResponseUser;
-
+use serde_json;
 
 mod common;
-
 
 #[test]
 fn hello_test() {
@@ -41,7 +39,7 @@ fn new_user_rt_test() {
         "name": "John Doe",
         "email": "j.doe@gmail.com",
         "password": "tester"
-        "##,
+        }"##,
         )
         .dispatch();
 
@@ -49,12 +47,12 @@ fn new_user_rt_test() {
     assert_eq!(response.content_type(), Some(ContentType::JSON));
 
     let response_body = response.body_string().expect("Response Body");
-    
-    let user:ResponseUser = serde_json::from_str(&response_body.as_str()).expect("Valid User Response");
+
+    let user: ResponseUser =
+        serde_json::from_str(&response_body.as_str()).expect("Valid User Response");
 
     assert_eq!(user.name, "John Doe");
     assert_eq!(user.email, "j.doe@gmail.com");
-
 }
 
 #[test]
