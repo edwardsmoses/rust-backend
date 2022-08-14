@@ -8,7 +8,7 @@ use rocket_contrib::serve::StaticFiles;
 
 use std::sync::{Arc, Mutex};
 
-mod data;
+pub mod data;
 mod routes;
 
 pub fn rocket_builder() -> rocket::Rocket {
