@@ -1,6 +1,3 @@
-use std::fmt::format;
-
-use lazy_static::lazy_static;
 use rocket::http::{ContentType, Status};
 use rust_graphql_backend::data::db::ResponseUser;
 use serde_json;
@@ -177,11 +174,6 @@ fn delete_user_rt_test() {
 }"##,
         )
         .dispatch();
-
-    let response_body = response_update_user.body_string().expect("Response Body");
-
-    let user: ResponseUser =
-        serde_json::from_str(&response_body.as_str()).expect("Valid User Response");
 
     assert_eq!(response_update_user.status(), Status::Ok);
     assert_eq!(response_update_user.content_type(), Some(ContentType::JSON));    
