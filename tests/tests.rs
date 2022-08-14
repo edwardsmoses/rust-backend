@@ -165,7 +165,7 @@ fn delete_user_rt_test() {
 
     let user_id = user_new.id;
 
-    let mut response_update_user = client
+    let response_delete_user = client
         .delete(format!("/api/users/{}", user_id))
         .header(ContentType::JSON)
         .body(
@@ -175,6 +175,6 @@ fn delete_user_rt_test() {
         )
         .dispatch();
 
-    assert_eq!(response_update_user.status(), Status::Ok);
-    assert_eq!(response_update_user.content_type(), Some(ContentType::JSON));    
+    assert_eq!(response_delete_user.status(), Status::Ok);
+    assert_eq!(response_delete_user.content_type(), Some(ContentType::JSON));
 }
