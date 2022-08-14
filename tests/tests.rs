@@ -93,19 +93,55 @@ fn info_user_rt_test() {
     //assert that the added user can be retrieved from the get api
     assert_eq!(user.name, "Jane Doe");
     assert_eq!(user.email, "jane.doe@gmail.com");
-
 }
 
 #[test]
 fn update_user_rt_test() {
     let client = common::setup();
-    let mut response = client.put("/api/users/1").dispatch();
-    assert_eq!(response.status(), Status::Ok);
-    assert_eq!(response.content_type(), Some(ContentType::JSON));
-    assert_eq!(
-        response.body_string(),
-        Some("{\"status\":\"Success\",\"message\":\"Update info for user 1\"}".into())
-    );
+
+    //insert a user
+    let mut response_new_user = client
+        .post("/api/users")
+        .header(ContentType::JSON)
+        .body(
+            r##"{
+    "name": "Jane Doe",
+    "email": "jane.doe@gmail.com",
+    "password": "tester"
+    }"##,
+        )
+        .dispatch();
+
+    //get the response from the new user request
+    let response_body = response_new_user.body_string().expect("Response Body");
+    let user_new: ResponseUser =
+        serde_json::from_str(&response_body.as_str()).expect("Valid User Response");
+
+    let user_id = user_new.id;
+
+    let mut response_update_user = client
+        .put(format!("/api/users/{}", user_id))
+        .header(ContentType::JSON)
+        .body(
+            r##"{
+"name": "Jane Doe JD.",
+"email": "jane.doe+new@gmail.com",
+"password": "tester"
+}"##,
+        )
+        .dispatch();
+
+    let response_body = response_update_user.body_string().expect("Response Body");
+
+    let user: ResponseUser =
+        serde_json::from_str(&response_body.as_str()).expect("Valid User Response");
+
+    assert_eq!(response_update_user.status(), Status::Ok);
+    assert_eq!(response_update_user.content_type(), Some(ContentType::JSON));
+
+    //assert that the user was updated, and returns the user with the updated info
+    assert_eq!(user.name, "Jane Doe JD.");
+    assert_eq!(user.email, "jane.doe+new@gmail.com");
 }
 
 #[test]
